@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-modified-nginx-pod
+spec:
+  containers:
+  - name: nginx-container
+    image: my-nginx-image:latest
+    imagePullPolicy: Never
+    ports:
+    - containerPort: 80
