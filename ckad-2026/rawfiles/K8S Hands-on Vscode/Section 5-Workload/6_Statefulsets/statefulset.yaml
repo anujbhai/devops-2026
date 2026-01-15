@@ -1,0 +1,30 @@
+apiVersion: apps/v1                # The Kubernetes API version for StatefulSets is "apps/v1"
+kind: StatefulSet                  # We are creating a resource of type StatefulSet
+metadata:                          # Metadata contains identifying information
+  name: nginx-stateful             # The unique name of the StatefulSet
+  labels:                          # Labels help organize and select the StatefulSet
+    app: nginx            # Here we label it "app=nginx-stateful"
+spec:                               # The specification of the StatefulSet
+  serviceName: "nginx-service"     # The name of the service associated with this StatefulSet
+  replicas: 3                       # Number of pod replicas we want to run
+  selector:                         # Selector defines the Pods the StatefulSet manages
+    matchLabels:
+      app: nginx          # Match the Pods with this label "app=nginx-stateful"
+  template:                         # Template for the Pods in the StatefulSet
+    metadata:                       # Metadata for the Pods
+      labels:
+        app: nginx        # Match label for Pods
+    spec:                           # Specification of the Pods
+      containers:                   # List of containers inside each Pod
+      - name: nginx-container       # Name of the first container
+        image: nginx:latest         # Container image to use (nginx, latest tag)
+        ports:                      # Ports exposed by this container
+        - containerPort: 80         # The application listens on port 80
+  volumeClaimTemplates:             # Persistent storage for StatefulSet Pods
+  - metadata:
+      name: nginx-persistent-storage # Name for the PersistentVolumeClaim
+    spec:
+      accessModes: [ "ReadWriteOnce" ] # Only one pod can write to the volume at a time
+      resources:
+        requests:
+          storage: 1Gi             # Requesting 1Gi of storage for each Pod

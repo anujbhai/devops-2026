@@ -1,0 +1,23 @@
+apiVersion: apps/v1                   # API version for the DaemonSet resource
+kind: DaemonSet                       # Defines this resource as a DaemonSet
+metadata:
+  name: fluentd-daemonset              # Name of the DaemonSet object
+spec:
+  selector:                           # Defines how to identify Pods managed by this DaemonSet
+    matchLabels:
+      app: fluentd                    # Match Pods with the label app=fluentd
+  template:                           # Pod template used by the DaemonSet
+    metadata:
+      labels:
+        app: fluentd                  # Label applied to Pods created by the DaemonSet
+    spec:
+      containers:                     # List of containers that will run inside each Pod
+      - name: fluentd-container       # Name of the container
+        image: fluent/fluentd:v1.16-debian-1  # Container image to use (Fluentd for log collection)
+        volumeMounts:                 # Mount host volumes into the container
+        - name: varlog                # Reference to the volume named "varlog"
+          mountPath: /var/log         # Mounts the host's /var/log directory inside the container
+      volumes:                        # Define volumes to be mounted in the Pod
+      - name: varlog                  # Volume name
+        hostPath:                     # Use a hostPath volume (maps directory from host to Pod)
+          path: /var/log              # Path on the host machine that will be mounted

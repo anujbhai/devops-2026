@@ -1,0 +1,32 @@
+# deployment.yaml
+apiVersion: apps/v1                  # Kubernetes API version for Deployment
+kind: Deployment                     # Resource type: Deployment
+metadata:
+  name: nginx-deployment             # Unique name of the Deployment
+  labels:
+    app: nginx                       # Label to identify the Deployment
+
+spec:
+  replicas: 1                        # Number of Pod replicas to run
+  selector:                          # Selector to match Pods managed by this Deployment
+    matchLabels:
+      app: nginx                     # Must match the labels in the Pod template
+
+  template:                          # Pod template (used to create Pods)
+    metadata:
+      labels:
+        app: nginx                   # Label assigned to each Pod
+    spec:
+      containers:
+      - name: nginx                  # Name of the container
+        image: nginx:latest          # Container image
+        resources:                   # Resource requests and limits
+          requests:                  # Minimum resources guaranteed for the container
+            cpu: 50m                 # Request 50 millicores of CPU
+            memory: 64Mi             # Request 64Mi of memory
+          limits:                    # Maximum resources the container can use
+            cpu: 100m                # Limit CPU to 100 millicores
+            memory: 128Mi            # Limit memory to 128Mi
+        ports:
+        - containerPort: 80          # Expose port 80 inside the container
+

@@ -1,0 +1,28 @@
+# Ingress Yaml file 
+apiVersion: networking.k8s.io/v1  # Specifies the API version for Ingress (v1 is stable in recent Kubernetes versions)
+kind: Ingress                    # Defines this resource as an Ingress, which manages external HTTP/S access to services
+metadata:
+  name: example-ingress          # The name of this Ingress resource
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /  # Tells the NGINX Ingress controller to rewrite the request URL to "/" before forwarding to backend
+spec:
+  ingressClassName: nginx        # Specifies that this Ingress should be handled by the "nginx" Ingress controller
+  rules:                         # Defines the set of routing rules for incoming HTTP requests
+  - host: example.com             # Specifies the domain name to match for these rules
+    http:                        # Indicates that these rules are for HTTP traffic
+      paths:                      # List of paths to route
+      - path: /a                  # Incoming requests to "/a" will be routed here
+        pathType: Prefix          # Path matching type: "Prefix" means any path that starts with "/a"
+        backend:                  # Defines the backend service to forward matching traffic to
+          service:
+            name: service-a       # Name of the service to route traffic to
+            port:
+              number: 80          # Port on the service to send traffic to
+      - path: /b                  # Incoming requests to "/b" will be routed here
+        pathType: Prefix          # Same as above: matches any path starting with "/b"
+        backend:
+          service:
+            name: service-b       # Name of the service to route traffic to
+            port:
+              number: 80          # Port on the service to send traffic to
+

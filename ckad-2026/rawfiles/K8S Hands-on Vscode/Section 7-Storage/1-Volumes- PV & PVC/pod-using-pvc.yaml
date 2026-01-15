@@ -1,0 +1,17 @@
+# Example: pod-using-pvc.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pvc-pod               # The name of the Pod
+spec:
+  containers:
+  - name: app-container          # The main container in the Pod
+    image: nginx                 # Using nginx as an example container
+    volumeMounts:
+    - name: storage-volume       # Name of the volume mount
+      mountPath: /usr/share/nginx/html   # Path inside the container where storage is mounted
+  volumes:
+  - name: storage-volume         # Volume name referenced by the container
+    persistentVolumeClaim:
+      claimName: my-pvc          # PVC that this Pod uses

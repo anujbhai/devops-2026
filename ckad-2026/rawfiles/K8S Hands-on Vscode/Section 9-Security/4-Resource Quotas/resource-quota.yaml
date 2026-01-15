@@ -1,0 +1,14 @@
+### Example: `resource-quota.yaml`
+
+apiVersion: v1                  # API version for ResourceQuota
+kind: ResourceQuota             # Defines the object type
+metadata:                       # Metadata section
+  name: my-resource-quota       # Unique name for the ResourceQuota
+  namespace: default                # (Optional) Namespace where it applies
+spec:                           # Specification of the quota
+  hard:                         # Hard limits for resource usage
+    pods: "10"                  # Maximum number of Pods in this namespace
+    requests.cpu: "2"           # Total sum of CPU requests allowed
+    requests.memory: "4Gi"      # Total sum of memory requests allowed
+    limits.cpu: "4"             # Total sum of CPU limits allowed
+    limits.memory: "8Gi"        # Total sum of memory limits allowed

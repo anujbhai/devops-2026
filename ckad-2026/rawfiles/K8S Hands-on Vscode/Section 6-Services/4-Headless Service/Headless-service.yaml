@@ -1,0 +1,12 @@
+apiVersion: v1                  # The Kubernetes API version for Services is "v1"
+kind: Service                    # We are creating a resource of type Service
+metadata:                        # Metadata contains identifying information
+  name: my-headless-service      # The unique name of the Service
+spec:                             # The specification of the Service
+  selector:                       # Selector defines the Pods that this Service will route traffic to
+    app: nginx                    # The label selector to find the Pods (e.g., "app=nginx")
+  ports:                           # The ports exposed by this Service
+    - protocol: TCP
+      port: 80                     # Port exposed by the Service
+      targetPort: 80               # Port on the Pod that the Service will forward to
+  clusterIP: None                 # ClusterIP is set to "None" to make the Service headless

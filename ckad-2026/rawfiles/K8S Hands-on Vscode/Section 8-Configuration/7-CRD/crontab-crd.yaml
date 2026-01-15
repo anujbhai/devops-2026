@@ -1,0 +1,30 @@
+apiVersion: apiextensions.k8s.io/v1       # Use the API for creating Custom Resource Definitions (CRDs)
+kind: CustomResourceDefinition             # Define a new custom resource type
+metadata:
+  name: crontabs.stable.example.com        # Full name of the CRD (must be unique across the cluster)
+spec:
+  group: stable.example.com                # API group under which the CRD will be registered
+  versions:
+    - name: v1                             # Define version of the CRD (v1)
+      served: true                         # Indicates this version is available via the API
+      storage: true                        # Marks this version as the one used for storage
+      schema:                              # Define the schema for validation (OpenAPI v3)
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:                          # Define the structure of the "spec" field for this CRD
+              type: object
+              properties:
+                cronSpec:
+                  type: string              # String value that defines the cron schedule
+                image:
+                  type: string              # Container image to run
+                replicas:
+                  type: integer             # Number of desired replicas
+  scope: Namespaced                        # CRD is namespaced (each namespace can have its own objects)
+  names:
+    plural: crontabs                       # Plural name used in kubectl commands (e.g., kubectl get crontabs)
+    singular: crontab                      # Singular name for the resource
+    kind: CronTab                          # The Kind used in manifests (YAML files)
+    shortNames:
+    - ct                                   # Short name alias (kubectl get ct)

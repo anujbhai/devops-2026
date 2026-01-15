@@ -1,0 +1,29 @@
+### Example: `pod-with-env-vars.yaml
+
+apiVersion: v1                  # The Kubernetes API version for Pods is "v1"
+kind: Pod                       # We are creating a resource of type Pod
+metadata:                        # Metadata contains identifying information
+  name: my-pod                  # The unique name of the Pod
+spec:                           # The specification of the Pod
+  containers:                   # List of containers inside this Pod
+  - name: nginx-container       # Name of the first container
+    image: nginx:latest         # Container image to use (nginx, latest tag)
+    env:                        # List of environment variables
+    - name: ENV_VAR_1           # Name of the environment variable
+      value: "value1"           # Value of the environment variable
+    - name: ENV_VAR_2           # Another environment variable
+      valueFrom:
+        configMapKeyRef:
+          name: my-config-map   # Reference to a ConfigMap to get the value
+          key: config-key       # Key in the ConfigMap to fetch
+    ports:                       # Ports exposed by this container
+    - containerPort: 80         # The application listens on port 80
+
+---
+apiVersion: v1                  # The Kubernetes API version for ConfigMaps is "v1"
+kind: ConfigMap                 # We are creating a resource of type ConfigMap
+metadata:                        # Metadata contains identifying information
+  name: my-config-map             # The unique name of the ConfigMap
+data:                            # The actual configuration data (key-value pairs)
+  config-key: myconfigvalue      # Key-value pair for the configuration
+  app-mode: production     

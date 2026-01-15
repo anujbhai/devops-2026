@@ -1,0 +1,12 @@
+apiVersion: v1                # The Kubernetes API version for Pods is "v1"
+kind: Pod                     # We are creating a resource of type Pod
+metadata:                      # Metadata contains identifying information
+  name: my-node-selector-pod   # The unique name of the Pod
+spec:                         # The specification of the Pod
+  nodeSelector:                # Specify NodeSelector for scheduling
+    disktype: ssd              # Label key-value pair that Node must match
+  containers:                  # List of containers inside this Pod
+  - name: nginx-container     # Name of the first container
+    image: nginx:latest       # Container image to use (nginx, latest tag)
+    ports:                     # Ports exposed by this container
+    - containerPort: 80       # The application listens on port 80

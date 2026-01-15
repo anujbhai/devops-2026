@@ -1,0 +1,9 @@
+apiVersion: v1                  # The Kubernetes API version for Nodes is "v1"
+kind: Node                       # We are creating a resource of type Node
+metadata:                        # Metadata contains identifying information
+  name: node-1                   # The name of the Node
+spec:                           # The specification of the Node
+  taints:                        # Define taints on the Node
+  - effect: NoSchedule           # Pods cannot be scheduled on this Node
+    key: disktype                # The taint key
+    value: ssd                   # The taint value

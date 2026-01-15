@@ -1,0 +1,14 @@
+# This manifest defines a Pod with metadata annotations for documentation and ownership.
+apiVersion: v1                   # The API version used for defining the Pod object
+kind: Pod                        # The resource type is Pod
+metadata:
+  name: my-annotated-pod         # The name of the Pod
+  annotations:                   # Annotations are used to attach non-identifying metadata
+    description: "Critical NGINX pod"   # A description for this Pod, useful for documentation or automation
+    owner: "team-dev"                   # Indicates which team or person owns this Pod
+spec:
+  containers:                    # The list of containers that run inside the Pod
+  - name: nginx                  # Name of the container
+    image: nginx:latest          # The container image used (NGINX latest version)
+    ports:
+    - containerPort: 80          # The port that this container listens on (HTTP)

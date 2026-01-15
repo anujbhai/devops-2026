@@ -1,0 +1,19 @@
+apiVersion: v1                # Kubernetes API version for this resource; Pod is part of core v1
+kind: Pod                     # The type of resource we are creating; here it is a Pod
+metadata:
+  name: restricted-demo       # Unique name of this Pod
+  namespace: secure-ns        # Namespace where this Pod will be created; it has Restricted PodSecurity
+spec:
+  containers:                 # List of containers inside this Pod
+  - name: demo                # Name of the container
+    image: busybox            # Container image to use; busybox is lightweight for testing
+    command: ["/bin/sh"]      # Command to run inside the container
+    args: ["-c", "sleep 3600"]  # Arguments to the command; here, the container sleeps for 1 hour
+    securityContext:          # Security settings applied to this container
+      runAsNonRoot: true      # Ensures the container does not run as root
+      runAsUser: 1000         # Specifies the user ID (1000) for the container process
+      allowPrivilegeEscalation: false  # Prevents the process from gaining more privileges than its parent
+      capabilities:           # Linux capabilities settings
+        drop: ["ALL"]         # Drops all additional privileges to reduce attack surface
+      seccompProfile:         # Defines the seccomp profile for syscall filtering
+        type: RuntimeDefault  # Uses the default runtime seccomp profile for additional security

@@ -1,0 +1,23 @@
+# deployment.yaml
+
+apiVersion: apps/v1            # The Kubernetes API version for Deployments
+kind: Deployment               # We are creating a Deployment resource
+metadata:                      # Metadata contains identifying information
+  name: my-deployment          # The unique name of the Deployment
+  labels:                      # Labels help organize and select the Deployment
+    app: nginx
+spec:                          # The specification of the Deployment
+  replicas: 3                  # Number of Pod replicas to maintain
+  selector:                    # Selector defines how to identify Pods managed by this Deployment
+    matchLabels:
+      app: nginx
+  template:                    # Pod template used by this Deployment
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80

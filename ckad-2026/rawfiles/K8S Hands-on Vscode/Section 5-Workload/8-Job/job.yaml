@@ -1,0 +1,18 @@
+# job.yaml
+apiVersion: batch/v1           # API version for Job
+kind: Job                      # We are creating a Job resource
+metadata:
+  name: nginx-job               # Unique name of the Job
+spec:
+  completions: 1                # Number of successful completions
+  parallelism: 1                # Number of Pods running in parallel
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        command: ["echo", "Hello CKAD!"]  # Command the container runs
+      restartPolicy: Never

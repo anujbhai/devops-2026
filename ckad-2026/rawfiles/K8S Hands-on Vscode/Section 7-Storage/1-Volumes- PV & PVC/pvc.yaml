@@ -1,0 +1,12 @@
+# Example: pvc.yaml
+
+apiVersion: v1              # API version for core Kubernetes resources
+kind: PersistentVolumeClaim # The resource type being created is a PVC
+metadata:
+  name: my-pvc              # Name of the PVC, used to reference it in Pods
+spec:
+  accessModes:
+    - ReadWriteOnce         # The volume can be mounted as read-write by a single node
+  resources:
+    requests:
+      storage: 1Gi          # The amount of storage being requested from a PersistentVolume

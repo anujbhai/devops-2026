@@ -1,0 +1,71 @@
+# -------------------------------
+# Blue Deployment (Stable version)
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-blue                 # Deployment name
+  labels:
+    app: nginx                     # Common label for app
+    version: blue                  # Version label = blue
+spec:
+  replicas: 3                      # Run 3 replicas (stable version)
+  selector:
+    matchLabels:
+      app: nginx
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: nginx
+        version: blue              # Pods will be labeled with version=blue
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.21          # Stable NGINX version
+        ports:
+        - containerPort: 80        # Expose port 80 inside Pod
+---
+# -------------------------------
+# Green Deployment (New version)
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-green                # Deployment name
+  labels:
+    app: nginx
+    version: green                 # Version label = green
+spec:
+  replicas: 3                      # Run 3 replicas (new version)
+  selector:
+    matchLabels:
+      app: nginx
+      version: green
+  template:
+    metadata:
+      labels:
+        app: nginx
+        version: green             # Pods will be labeled with version=green
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.22          # New NGINX version
+        ports:
+        - containerPort: 80        # Expose port 80 inside Pod
+---
+# -------------------------------
+# Service (Traffic routing)
+# -------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service              # Service name
+spec:
+  selector:
+    app: nginx
+    version: blue                  # Initially routes traffic to BLUE version
+  ports:
+  - protocol: TCP
+    port: 80                       # Service port exposed internally
+    targetPort: 80                 # Maps to containerPort 80

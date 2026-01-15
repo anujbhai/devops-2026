@@ -1,0 +1,20 @@
+apiVersion: v1                # The Kubernetes API version for LimitRange is "v1"
+kind: LimitRange              # We are creating a resource of type LimitRange
+metadata:                      # Metadata contains identifying information
+  name: my-limit-range        # The unique name of the LimitRange
+  namespace: default          # The namespace where the LimitRange will apply
+spec:                         # The specification of the LimitRange
+  limits:                      # Define resource limits
+  - type: Container            # This limit applies to containers
+    max:
+      cpu: "1"                 # Maximum CPU usage (1 core)
+      memory: "2Gi"            # Maximum memory usage (2 GiB)
+    min:
+      cpu: "100m"              # Minimum CPU usage (100 milli-CPU)
+      memory: "128Mi"          # Minimum memory usage (128 MiB)
+    default:
+      cpu: "500m"              # Default CPU usage (500 milli-CPU) if not specified
+      memory: "512Mi"          # Default memory usage (512 MiB) if not specified
+    defaultRequest:
+      cpu: "200m"              # Default requested CPU (200 milli-CPU) if not specified
+      memory: "256Mi"          # Default requested memory (256 MiB) if not specified

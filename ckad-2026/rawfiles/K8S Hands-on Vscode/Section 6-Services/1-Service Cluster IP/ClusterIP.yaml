@@ -1,0 +1,15 @@
+# ClusterIP.yaml
+
+apiVersion: v1                  # Kubernetes API version for Service
+kind: Service                   # Resource type: Service
+metadata:
+  name: my-clusterip-service    # Unique name of the Service
+
+spec:
+  selector:
+    app: nginx                  # Selects Pods with label app=nginx to route traffic to
+  ports:
+    - protocol: TCP             # Network protocol used by the Service
+      port: 80                  # The port exposed by the Service within the cluster
+      targetPort: 80            # The port on the container that the Service maps to
+  type: ClusterIP               # Service type ClusterIP allows internal access only
