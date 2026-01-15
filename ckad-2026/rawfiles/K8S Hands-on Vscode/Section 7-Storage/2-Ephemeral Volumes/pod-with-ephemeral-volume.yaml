@@ -1,0 +1,15 @@
+
+apiVersion: v1                  # The Kubernetes API version for Pods is "v1"
+kind: Pod                       # We are creating a resource of type Pod
+metadata:                        # Metadata contains identifying information
+  name: my-ephemeral-pod         # The unique name of the Pod
+spec:                           # The specification of the Pod
+  containers:                    # List of containers inside this Pod
+  - name: nginx-container       # Name of the first container
+    image: nginx:latest         # Container image to use (nginx, latest tag)
+    volumeMounts:                # Mount the ephemeral volume to the container
+    - mountPath: /tmp            # Mount path for the ephemeral volume inside the container
+      name: ephemeral-storage    # Name of the ephemeral volume to mount
+  volumes:                       # Define the volumes used by the Pod
+  - name: ephemeral-storage     # Name of the ephemeral volume
+    emptyDir: {}                 # An ephemeral volume type (emptyDir)

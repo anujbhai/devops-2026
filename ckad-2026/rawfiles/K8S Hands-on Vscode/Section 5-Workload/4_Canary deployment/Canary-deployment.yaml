@@ -1,0 +1,70 @@
+# -------------------------------
+# Stable Deployment (Main traffic)
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-stable                 # Deployment name
+  labels:
+    app: nginx                       # Common label for app
+    track: stable                    # Track = stable (main version)
+spec:
+  replicas: 3                        # Run 3 replicas of stable version
+  selector:
+    matchLabels:
+      app: nginx
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: nginx
+        track: stable                # Pods labeled as stable
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.21            # Stable NGINX version
+        ports:
+        - containerPort: 80
+---
+# -------------------------------
+# Canary Deployment (New version)
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-canary                 # Deployment name
+  labels:
+    app: nginx
+    track: canary                    # Track = canary (new version)
+spec:
+  replicas: 1                        # Run only 1 replica for testing
+  selector:
+    matchLabels:
+      app: nginx
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: nginx
+        track: canary                # Pods labeled as canary
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.22            # Canary version (new NGINX)
+        ports:
+        - containerPort: 80
+---
+# -------------------------------
+# Service (Routes traffic)
+# -------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx                       # Selects all Pods with app=nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

@@ -1,0 +1,21 @@
+apiVersion: apps/v1                # The Kubernetes API version for ReplicaSets is "apps/v1"
+kind: ReplicaSet                   # We are creating a resource of type ReplicaSet
+metadata:                          # Metadata contains identifying information
+  name: nginx-replicaset            # The unique name of the ReplicaSet
+  labels:                          # Labels help organize and select the ReplicaSet
+    app: nginx-replica             # Here we label it "app=nginx-replica"
+spec:                               # The specification of the ReplicaSet
+  replicas: 3                       # Number of Pod replicas to maintain
+  selector:                         # Selector defines the Pods the ReplicaSet manages
+    matchLabels:
+      app: nginx-replica           # Match the Pods with this label "app=nginx-replica"
+  template:                         # Template for the Pods in the ReplicaSet
+    metadata:                       # Metadata for the Pods
+      labels:
+        app: nginx-replica         # Match label for Pods
+    spec:                           # Specification of the Pods
+      containers:                   # List of containers inside each Pod
+      - name: nginx-container       # Name of the first container
+        image: nginx:latest         # Container image to use (nginx, latest tag)
+        ports:                      # Ports exposed by this container
+        - containerPort: 80  

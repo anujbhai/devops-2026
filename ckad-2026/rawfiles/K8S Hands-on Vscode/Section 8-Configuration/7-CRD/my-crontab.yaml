@@ -1,0 +1,8 @@
+apiVersion: stable.example.com/v1     # Use the CRD API group and version defined earlier
+kind: CronTab                         # The custom resource Kind defined in the CRD
+metadata:
+  name: my-crontab                    # Name of this specific CronTab resource
+spec:                                 # Custom fields defined by the CRD schema
+  cronSpec: "* * * * *"               # Schedule for running the job (every minute)
+  image: nginx:latest                 # Container image to use for the job
+  replicas: 2                         # Number of replicas (pods) to create each run

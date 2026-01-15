@@ -1,0 +1,17 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-within-limits
+  namespace: default
+spec:
+  containers:
+  - name: demo-container
+    image: nginx:alpine
+    resources:
+      requests:
+        cpu: "300m"       # Within the allowed range (≥100m and ≤1)
+        memory: "256Mi"   # Within the allowed range (≥128Mi and ≤2Gi)
+      limits:
+        cpu: "800m"       # Below max limit (1 core)
+        memory: "1Gi"     # Below max limit (2Gi)

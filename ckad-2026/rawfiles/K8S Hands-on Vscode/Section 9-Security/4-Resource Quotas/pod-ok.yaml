@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-ok
+  namespace: default
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      resources:
+        requests:
+          cpu: "500m"          # 0.5 CPU
+          memory: "512Mi"      # 0.5 GiB memory
+        limits:
+          cpu: "1"             # 1 CPU max
+          memory: "1Gi"        # 1 GiB max

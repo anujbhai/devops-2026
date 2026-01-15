@@ -1,0 +1,17 @@
+apiVersion: v1                  # The Kubernetes API version for Pods is "v1"
+kind: Pod                       # We are creating a resource of type Pod
+metadata:                        # Metadata contains identifying information
+  name: my-resource-pod          # The unique name of the Pod
+spec:                           # The specification of the Pod
+  containers:                    # List of containers inside this Pod
+  - name: nginx-container       # Name of the first container
+    image: nginx:latest         # Container image to use (nginx, latest tag)
+    resources:                  # Resource requests and limits
+      requests:                  # Minimum resources the container needs
+        cpu: "100m"              # Requesting 100 milli-CPU
+        memory: "128Mi"          # Requesting 128 MB of memory
+      limits:                    # Maximum resources the container can use
+        cpu: "500m"              # Limiting the container to 500 milli-CPU
+        memory: "512Mi"          # Limiting the container to 512 MB of memory
+    ports:                       # Ports exposed by this container
+    - containerPort: 80         # The application listens on port 80

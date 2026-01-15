@@ -1,0 +1,27 @@
+
+### Example: `configmap.yaml`
+
+apiVersion: v1                  # The Kubernetes API version for ConfigMaps is "v1"
+kind: ConfigMap                 # We are creating a resource of type ConfigMap
+metadata:                        # Metadata contains identifying information
+  name: my-configmap             # The unique name of the ConfigMap
+data:                            # The actual configuration data (key-value pairs)
+  config-key: myconfigvalue      # Key-value pair for the configuration
+  app-mode: production           # Another key-value pair
+
+---
+### Example: `pod-with-configmap.yaml`
+
+apiVersion: v1                  # The Kubernetes API version for Pods is "v1"
+kind: Pod                       # We are creating a resource of type Pod
+metadata:                        # Metadata contains identifying information
+  name: pod-with-configmap       # The unique name of the Pod
+spec:                           # The specification of the Pod
+  containers:                    # List of containers inside this Pod
+  - name: nginx-container       # Name of the first container
+    image: nginx:latest         # Container image to use (nginx, latest tag)
+    envFrom:                    # Referencing the ConfigMap to inject environment variables
+    - configMapRef:
+        name: my-configmap      # Referencing the ConfigMap by name
+    ports:                       # Ports exposed by this container
+    - containerPort: 80         # The application listens on port 80

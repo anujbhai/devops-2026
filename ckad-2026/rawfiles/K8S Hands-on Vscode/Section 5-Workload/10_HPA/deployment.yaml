@@ -1,0 +1,29 @@
+# deployment.yaml
+apiVersion: apps/v1          # API version for the Deployment resource
+kind: Deployment             # Specifies that this is a Deployment object
+metadata:
+  name: nginx-deployment     # Name of the Deployment
+  labels:
+    app: nginx               # Label attached to the Deployment for identification
+
+spec:
+  replicas: 1                # Number of Pod replicas to run
+  selector:
+    matchLabels:
+      app: nginx             # Pods with this label will be managed by the Deployment
+
+  template:                  # Pod template definition (used to create Pods)
+    metadata:
+      labels:
+        app: nginx           # Label applied to the Pods created by this Deployment
+    spec:
+      containers:
+      - name: nginx          # Name of the container
+        image: nginx:latest  # Container image to use (nginx latest version)
+        resources:
+          requests:
+            cpu: 100m        # Requests 100 millicores (0.1 CPU) as minimum CPU guarantee
+        ports:
+        - containerPort: 80  # Exposes port 80 inside the container (HTTP traffic)
+
+

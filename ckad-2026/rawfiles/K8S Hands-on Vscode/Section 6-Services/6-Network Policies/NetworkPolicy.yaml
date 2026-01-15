@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1   # API version for NetworkPolicy resources
+kind: NetworkPolicy                # The resource type is NetworkPolicy
+metadata:                          # Metadata section contains identifying information
+  name: allow-nginx                # Name of the NetworkPolicy
+spec:                              # Specification of the policy behavior
+  podSelector:                     # Selects which pods this policy applies to
+    matchLabels:                   # Uses labels to match specific pods
+      app: nginx                   # Applies to pods with label app=nginx
+  policyTypes:                     # Defines the type of traffic this policy affects
+  - Ingress                        # This policy controls incoming (Ingress) traffic
+  ingress:                         # Defines rules for incoming traffic
+  - from:                          # Specifies the allowed sources of incoming traffic
+    - podSelector:                 # Select pods based on their labels
+        matchLabels:               # Matching labels criteria for allowed pods
+          access: allowed          # Only pods with label access=allowed can connect
+    ports:                         # Specifies which ports and protocols are allowed
+    - protocol: TCP                # Allow TCP protocol traffic
+      port: 80                     # Allow traffic on port 80 (typically HTTP)

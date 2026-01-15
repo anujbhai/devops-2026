@@ -1,0 +1,12 @@
+### Example: `role.yaml`
+
+apiVersion: rbac.authorization.k8s.io/v1   # The Kubernetes API version for Role is "rbac.authorization.k8s.io/v1"
+kind: Role                                # We are creating a resource of type Role
+metadata:                                  # Metadata contains identifying information
+  name: pod-reader                         # The unique name of the Role
+  namespace: default                       # The namespace in which the role is applied
+rules:                                     # Defines the permissions for the role
+- apiGroups: [""]                          # The empty string means the core API group (Pods, Services, etc.)
+  resources: ["pods"]                      # The resource type (Pods)
+  verbs: ["get", "list"]                   # The verbs (actions) allowed (get and list Pods)                  # The verbs (actions) allowed (get and list Pods)
+

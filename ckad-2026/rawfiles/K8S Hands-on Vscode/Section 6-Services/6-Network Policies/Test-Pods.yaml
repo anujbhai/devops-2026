@@ -1,0 +1,28 @@
+# -------------------------
+# Allowed Pod (can access nginx)
+# -------------------------
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: allowed-pod
+  labels:
+    access: allowed              # Matches the NetworkPolicy rule
+spec:
+  containers:
+  - name: curl
+    image: curlimages/curl
+    command: ["sleep", "3600"]   # Keep running for testing
+---
+# -------------------------
+# Denied Pod (cannot access nginx)
+# -------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: denied-pod
+spec:
+  containers:
+  - name: curl
+    image: curlimages/curl
+    command: ["sleep", "3600"]

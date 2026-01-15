@@ -1,0 +1,4 @@
+apiVersion: v1        # API version for core Kubernetes objects like Namespace
+kind: Namespace       # Resource type is Namespace
+metadata:             # Metadata contains identifying information
+  name: dev           # Name of the namespace to be created (here: "dev")

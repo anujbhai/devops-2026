@@ -1,0 +1,15 @@
+apiVersion: v1                # The Kubernetes API version for Pods is "v1"
+kind: Pod                     # We are creating a resource of type Pod
+metadata:                      # Metadata contains identifying information
+  name: my-tolerated-pod       # The unique name of the Pod
+spec:                         # The specification of the Pod
+  tolerations:                 # Define Tolerations for scheduling
+  - key: disktype              # The taint key that this Pod will tolerate
+    operator: "Equal"          # The operator to match the taint value
+    value: ssd                 # The taint value that this Pod will tolerate
+    effect: NoSchedule         # Tolerate the NoSchedule effect
+  containers:                  # List of containers inside this Pod
+  - name: nginx-container     # Name of the first container
+    image: nginx:latest       # Container image to use (nginx, latest tag)
+    ports:                     # Ports exposed by this container
+    - containerPort: 80       # The application listens on port 80

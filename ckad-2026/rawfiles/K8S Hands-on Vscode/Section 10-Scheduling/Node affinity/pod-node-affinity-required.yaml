@@ -1,0 +1,19 @@
+apiVersion: v1                         # API version for Pod objects
+kind: Pod                               # We're creating a Pod resource
+metadata:
+  name: nginx-node-affinity             # Name of the Pod
+spec:
+  containers:                           # Define the containers that will run in the Pod
+  - name: nginx                         # Container name
+    image: nginx:latest                 # Docker image used by the container
+    ports:
+    - containerPort: 80                 # Expose port 80 inside the container
+  affinity:                             # Affinity rules define where the Pod can be scheduled
+    nodeAffinity:                       # Node affinity specifies rules about the nodes the Pod can run on
+      requiredDuringSchedulingIgnoredDuringExecution:    # "Required" means it's a hard rule (the Pod will only be scheduled on matching nodes)
+        nodeSelectorTerms:              # A list of conditions; at least one must match
+        - matchExpressions:             # Label-based matching rules
+          - key: disktype               # Node label key to check
+            operator: In                # Operator "In" means the node must have one of the listed values
+            values:
+            - ssd                       # Only nodes with label disktype=ssd are eligible to host this Pod

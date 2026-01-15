@@ -1,0 +1,11 @@
+### Example: `storage-class.yaml`
+
+apiVersion: storage.k8s.io/v1   # API version for StorageClass resources
+kind: StorageClass              # Resource type: StorageClass
+metadata:
+  name: my-storage-class # Name of the StorageClass; used when creating PVCs
+
+provisioner: k8s.io/minikube-hostpath  # The provisioner plugin that will dynamically create PersistentVolumes # "k8s.io/minikube-hostpath" works for Minikube clusters
+reclaimPolicy: Retain  # Defines what happens to the PV when the PVC is deleted # Retain → keep the PV and its data even after PVC deletion (manual cleanup required)
+volumeBindingMode: Immediate # Determines when the PV is bound to a PVC # Immediate → PV is provisioned and bound as soon as the PVC is created
+

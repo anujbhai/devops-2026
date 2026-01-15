@@ -1,0 +1,14 @@
+# Example: pv.yaml
+
+apiVersion: v1                  # The Kubernetes API version for Persistent Volumes is "v1"
+kind: PersistentVolume           # We are creating a resource of type PersistentVolume
+metadata:                        # Metadata contains identifying information
+  name: my-pv                    # The unique name of the PersistentVolume
+spec:                            # The specification of the PersistentVolume
+  capacity:                      # The storage capacity of the PersistentVolume
+    storage: 1Gi                 # 1Gi of storage
+  accessModes:                   # Access modes of the PersistentVolume
+    - ReadWriteOnce              # Can be mounted as read-write by a single node
+  persistentVolumeReclaimPolicy: Retain    # The policy for when the volume is released
+  hostPath:                      # A simple hostPath to simulate persistent storage
+    path: /mnt/data/pvdata        # Path to the volume on the node

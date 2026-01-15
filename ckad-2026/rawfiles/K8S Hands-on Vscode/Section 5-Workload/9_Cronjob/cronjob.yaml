@@ -1,0 +1,19 @@
+# cronjob.yaml
+apiVersion: batch/v1
+kind: CronJob                  # We are creating a CronJob resource
+metadata:
+  name: nginx-cronjob           # Unique name of the CronJob
+spec:
+  schedule: "*/1 * * * *"      # Run every 1 minute
+  jobTemplate:                  # Template for the Job to run
+    spec:
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - name: nginx-container
+            image: nginx:latest
+            command: ["echo", "Hello CKAD CronJob!"]
+          restartPolicy: Never

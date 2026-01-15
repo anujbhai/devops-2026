@@ -1,0 +1,20 @@
+apiVersion: v1                         # API version for Pod objects
+kind: Pod                               # We're creating a Pod resource
+metadata:
+  name: nginx-node-affinity-preferred   # Name of the Pod
+spec:
+  containers:                           # Define the containers that run inside the Pod
+  - name: nginx                         # Container name
+    image: nginx:latest                 # Docker image used by the container
+    ports:
+    - containerPort: 80                 # Expose port 80 inside the container
+  affinity:                             # Affinity rules control where the Pod is scheduled
+    nodeAffinity:                       # Node affinity specifies rules about which nodes the Pod can run on
+      preferredDuringSchedulingIgnoredDuringExecution:   # "Preferred" means it's a soft rule (Kubernetes will try to respect it, but not mandatory)
+      - weight: 1                       # Weight (1–100) gives priority strength if multiple rules are defined
+        preference:                     # Defines the node selection criteria
+          matchExpressions:             # List of label-based matching rules
+          - key: disktype               # The node label key to check
+            operator: In                # Operator "In" means the node must have one of the listed values
+            values:
+            - ssd                       # The preferred node label value; here we prefer nodes labeled disktype=ssd

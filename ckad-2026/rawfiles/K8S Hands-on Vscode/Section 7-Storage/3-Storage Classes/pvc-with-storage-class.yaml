@@ -1,0 +1,13 @@
+### Example: `pvc-with-storage-class.yaml`
+apiVersion: v1                  # The Kubernetes API version for Persistent Volume Claims is "v1"
+kind: PersistentVolumeClaim      # We are creating a resource of type PersistentVolumeClaim
+metadata:                        # Metadata contains identifying information
+  name: my-pvc                   # The unique name of the PersistentVolumeClaim
+spec:                            # The specification of the PersistentVolumeClaim
+  accessModes:                   # Access modes for the PersistentVolumeClaim
+    - ReadWriteOnce              # Can be mounted as read-write by a single node
+  resources:                     # The requested resources for the PersistentVolumeClaim
+    requests:
+      storage: 1Gi               # Requesting 5Gi of storage
+  storageClassName: my-storage-class  # Reference to the StorageClass
+

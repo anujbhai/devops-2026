@@ -1,0 +1,10 @@
+apiVersion: v1                # The Kubernetes API version for Pods is "v1"
+kind: Pod                     # We are creating a resource of type Pod
+metadata:                      # Metadata contains identifying information
+  name: my-modified-nginx-pod  # The unique name of the Pod
+spec:                         # The specification of the Pod
+  containers:                  # List of containers inside this Pod
+  - name: nginx-container     # Name of the container
+    image: my-nginx-image      # Use the modified container image (my-nginx-image)
+    ports:                     # Ports exposed by this container
+    - containerPort: 80       # The application listens on port 80

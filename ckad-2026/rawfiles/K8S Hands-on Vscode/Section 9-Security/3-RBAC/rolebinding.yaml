@@ -1,0 +1,16 @@
+
+### Example: `rolebinding.yaml`
+
+apiVersion: rbac.authorization.k8s.io/v1    # The Kubernetes API version for RoleBinding is "rbac.authorization.k8s.io/v1"
+kind: RoleBinding                           # We are creating a resource of type RoleBinding
+metadata:                                   # Metadata contains identifying information
+  name: pod-reader-binding                  # The unique name of the RoleBinding
+  namespace: default                        # The namespace in which the RoleBinding is applied
+subjects:                                   # Defines the users or service accounts to whom the role is assigned
+- kind: User                                # The type of subject (could be User, ServiceAccount, etc.)
+  name: developer                           # The name of the subject (e.g., "developer")
+  apiGroup: rbac.authorization.k8s.io       # The API group for RBAC subjects
+roleRef:                                    # References the role that is being assigned
+  kind: Role                                # The kind of the referenced role (could be Role or ClusterRole)
+  name: pod-reader                          # The name of the role being assigned
+  apiGroup: rbac.authorization.k8s.io       # The API group for the referenced role
